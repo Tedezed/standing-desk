@@ -1,5 +1,8 @@
 #include <EEPROM.h>
 
+// Stop
+bool stop_on = false;
+
 // Motor
 int pint_int_1 = 2;
 int pint_int_2 = 3;
@@ -10,8 +13,8 @@ int pint_int_4 = 5;
 int num_shots = 2;
 int address_1  = 45;
 int address_2  = 85;
-int pin_sensor_trig  = 7;
-int pin_sensor_echo  = 6;
+int pin_sensor_trig  = 6;
+int pin_sensor_echo  = 7;
 long duration;
 int distance;
 
@@ -116,16 +119,20 @@ void buttonControl () {
   // Mode 
   if (buttonStateButton0 == LOW) {
     Serial.println("- Button0");
-    if (last_state_pin_button_0 == 1)
-    {
-      mode = mode + 1;
-      if (mode > max_mode) {
-        mode = 0;
+    if (stop_on != true) {
+      if (last_state_pin_button_0 == 1)
+      {
+        mode = mode + 1;
+        if (mode > max_mode) {
+          mode = 0;
+        }
+        last_state_pin_button_0 = 0;
       }
-      last_state_pin_button_0 = 0;
+      Serial.print("- Mode: ");
+      Serial.println(mode);
     }
-    Serial.print("- Mode: ");
-    Serial.println(mode);
+  } else {
+    stop_on = false;
   }
   if (buttonStateButton0 == HIGH) {
    last_state_pin_button_0 = 1;
@@ -228,6 +235,21 @@ int readIntFromEEPROM(int address)
 
 // Memory position
 
+bool stopMove () {
+  byte buttonStateButton0 = digitalRead(pin_button_0);
+
+  if (buttonStateButton0 == LOW) {
+    Serial.println("- Button0 - Stop!");
+    if (last_state_pin_button_0 == 1)
+    {
+     stop_on = true;
+     return stop_on;
+    }
+    stop_on = false;
+    return stop_on;
+  }
+}
+
 void sensorWritePosition(int address)
 {
   writeIntIntoEEPROM(address, readDistance());
@@ -237,17 +259,24 @@ int toPosition(int address)
 {
   int memory_distance = readIntFromEEPROM(address);
   while(readDistance() < memory_distance){
+    if (stopMove()) {
+      break;
+    }
     Up();
   }
   while(readDistance() > memory_distance){
+    if (stopMove()) {
+      break;
+    }
     Down();
   }
-  Serial.print("- [INFO] In position!");
+  Serial.print("- [INFO] In position or stop!");
 }
 
 // Motors
 
 void Up() {
+  Serial.println("UP");
   motor1Up();
   motor2Up();
   delay(1000);
@@ -255,6 +284,7 @@ void Up() {
 }
 
 void Down() {
+  Serial.println("DOWN");
   motor1Down();
   motor2Down();
   delay(1000);
@@ -262,24 +292,28 @@ void Down() {
 }
 
 void Up1() {
+  Serial.println("UP_1");
   motor1Up();
   delay(1000);
   motorStop();
 }
 
 void Down1() {
+  Serial.println("DOWN_1");
   motor1Down();
   delay(1000);
   motorStop();
 }
 
 void Up2() {
+  Serial.println("UP_2");
   motor2Up();
   delay(1000);
   motorStop();
 }
 
 void Down2() {
+  Serial.println("DOWN_2");
   motor2Down();
   delay(1000);
   motorStop();
