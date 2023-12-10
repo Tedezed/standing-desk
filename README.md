@@ -6,5 +6,9 @@ Standing desk controller for Arduino.
 
 ### Requirements:
 
-- Arduino
-- L298N
+- Arduino Nano x1.
+- L298N x1.
+- Button PBS-33B x5
+- Led 5mm x1.
+- Resistance 220
+- HC-SR04 Ultrasonic Distance Sensor x1.
