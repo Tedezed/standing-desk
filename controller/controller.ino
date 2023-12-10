@@ -51,6 +51,16 @@ void loop () {
   buttonControl();
 }
 
+void led_save (int delay_led, int num_led_on) {
+  digitalWrite(13, LOW);
+  for(int i = 0; i<num_led_on; i++){
+    digitalWrite(13, HIGH);
+    delay(delay_led);
+    digitalWrite(13, LOW);
+    delay(delay_led);
+  }
+}
+
 void serialMonitorControl () {
   if (Serial.available() > 0) {
     String s = Serial.readStringUntil('\n');
@@ -138,6 +148,13 @@ void buttonControl () {
    last_state_pin_button_0 = 1;
   }
 
+  if (mode == 0) {
+    digitalWrite(13, LOW);
+  }
+  if (mode == 1) {
+    digitalWrite(13, HIGH);
+  }
+
   // Positions
   
   if (buttonStateButton1 == LOW) {
@@ -146,6 +163,7 @@ void buttonControl () {
       toPosition(address_1);
     }
     if (mode == 1) {
+      led_save(200, 3);
       sensorWritePosition(address_1);
     }
   }
@@ -155,6 +173,7 @@ void buttonControl () {
       toPosition(address_2);
     }
     if (mode == 1) {
+      led_save(200, 3);
       sensorWritePosition(address_2);
     }
   }
