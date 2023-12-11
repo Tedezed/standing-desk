@@ -2,6 +2,12 @@
 
 Standing desk controller for Arduino.
 
+### Modes
+
+![modes](img/standing-desk-modes.jpg)
+
+### Circuit
+
 ![pcb](img/standing_desk_bb.png)
 
 ### Requirements:
@@ -14,6 +20,3 @@ Standing desk controller for Arduino.
 - HC-SR04 Ultrasonic Distance Sensor x1.
 - [VEVOR Linear actuator 12V 50.8CM 900N 10 mm/s](https://a.aliexpress.com/_EwHOAv7) x2.
 
-### Modes
-
-![modes](img/standing-desk-modes.jpg)
