@@ -12,3 +12,8 @@ Standing desk controller for Arduino.
 - Led 5mm x1.
 - Resistance 220
 - HC-SR04 Ultrasonic Distance Sensor x1.
+- [VEVOR Linear actuator 12V 50.8CM 900N 10 mm/s](https://a.aliexpress.com/_EwHOAv7) x2.
+
+### Modes
+
+![modes](img/standing-desk-modes.jpg)
