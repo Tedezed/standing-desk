@@ -1,6 +1,6 @@
 # Standing desk
 
-Standing desk controller for Arduino.
+Standing desk controller for Arduino: https://www.thingiverse.com/thing:6367171
 
 ### Modes
 
